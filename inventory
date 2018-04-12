@@ -1,6 +1,0 @@
-[methanika.org-hosts]
-three.methanika.org
-
-[methanika.org-hosts:vars]
-ansible_ssh_private_key_file=~/.ssh/one
-ansible_port=22002
