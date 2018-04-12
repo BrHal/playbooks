@@ -1,0 +1,16 @@
+---
+- hosts: methanika.org-hosts
+  remote_user: ubuntu
+  become: yes
+  vars:
+    tarball_local_path: /tmp/LiveMon.tar
+    tarball_name: LiveMon-0.1.0.tar
+    tarball_URL: https://nexus.agilefabric.carrefour.io/repository/dio/pocLiveMon/tarballs/{{tarball_name}}
+    nexus_user: "cloudops"
+    nexus_password: "L3k9KrR3frDV3AWMXNAs"
+    install_path: "/opt/livemon"
+  tasks:
+  - name: Install docker repo
+    apt_repository:
+     repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+

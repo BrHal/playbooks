@@ -1,2 +1,2 @@
-# playbooks
-playbooks for my domains
+# Playbooks
+ansible playbooks for my domains
