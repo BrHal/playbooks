@@ -1,9 +1,73 @@
 ---
-- hosts: methanika-hosts
-  become: yes
+- hosts:
+    methanika-hosts
+  become:
+    yes
   vars:
-    install_path: "/opt/livemon"
+    venv_root_dir:
+      "/venvs"
   tasks:
-  - name: Install docker repo
+  - name:
+      Install docker repo key
+    apt_key:
+      url:
+        https://download.docker.com/linux/ubuntu/gpg
+      id:
+        0EBFCD88
+      state:
+        present
+  - name:
+      Install docker repo
     apt_repository:
-     repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable"
+     repo:
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable"
+     state:
+       present
+  - name:
+      Install docker-ce
+    package:
+      name:
+        docker-ce
+      state:
+        present
+  - name:
+      Install virtualenv
+    package:
+      name:
+        virtualenv
+      state:
+        present
+  - name:
+      Install pip
+    package:
+      name:
+        python-pip
+      state:
+        present
+  - name:
+      Install pip latest
+    pip:
+      name:
+        pip
+      state:
+        latest
+  - name:
+      Venvs root dir
+    file:
+      path:
+        "{{venv_root_dir}}"
+      owner:
+        "{{ansible_ssh_user}}"
+      group:
+        "{{ansible_ssh_user}}"
+      state:
+        directory
+  - name:
+      Install docker-compose
+    become:
+      no
+    pip:
+      name:
+        docker-compose
+      virtualenv:
+        "{{venv_root_dir}}/docker-compose"
